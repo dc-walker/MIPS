@@ -58,3 +58,30 @@ string Disassemble(unsigned int instruction);
 /*
 输入uint类型的32位机器码，返回形如add $t0, $t1, $t2的指令
 */
+
+int main()
+{
+    //一点测试代码
+    unsigned int instr_add = Assemble("add $t0, $t1, $t2");
+    unsigned int instr_jr = Assemble("jr $ra");
+    unsigned int instr_slt = Assemble("slt $t0, $t1, $t2");
+    unsigned int instr_j = Assemble("j 0x00400000");
+    unsigned int instr_jal = Assemble("jal 0x00400000");
+    unsigned int instr_beq = Assemble("beq $t0, $t1, 0x00001000");
+    unsigned int instr_bne = Assemble("bne $t0, $t1, 0x00001000");
+    unsigned int instr_addi = Assemble("addi $t0, $t1, 100");
+    unsigned int instr_lw = Assemble("lw $t0, 0($t1)");
+    unsigned int instr_sw = Assemble("sw $t0, 0($t1)");
+    cout << Disassemble(instr_add) << endl;
+    cout << Disassemble(instr_jr) << endl;
+    cout << Disassemble(instr_slt) << endl;
+    cout << Disassemble(instr_j) << endl;
+    cout << Disassemble(instr_jal) << endl;
+    cout << Disassemble(instr_beq) << endl;
+    cout << Disassemble(instr_bne) << endl;
+    cout << Disassemble(instr_addi) << endl;
+    cout << Disassemble(instr_lw) << endl;
+    cout << Disassemble(instr_sw) << endl;
+
+    return 0;
+}

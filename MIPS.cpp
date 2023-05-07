@@ -7,17 +7,17 @@ using namespace std;
 //根据指令和操作码的建立对应关系
 const unordered_map<string, unsigned int> OPCODES = 
 {
-    // 暂时选了这10条，还没确定
+    // 暂时选了这10条，还没确定,opcode我没仔细看
     {"add", 0x20},
+    {"sub", }
     {"addi", 0x8},
     {"lw", 0x23},
     {"sw", 0x2b},
     {"beq", 0x4},
     {"bne", 0x5},
-    {"j", 0x2},
     {"jal", 0x3},
-    // {"jr", 0x},
-    // {"slt", 0x}
+    {"jr", 0x},
+    {"slt", 0x}
 };
 
 //32个寄存器
@@ -32,7 +32,7 @@ public:
     接口也不一定长这样，怎么好写怎么来
     */
 private:
-    //PC等寄存器,内存
+    //PC等寄存器,内存（可用数组实现）
     //其它寄存器可以参考如下实现
     const unordered_map<string, unsigned int> REGISTERS = 
     {
@@ -48,30 +48,32 @@ private:
 };
 
 //汇编
-unsigned int Assemble(string instruction);
+string Assemble(string instruction);
 /*
-输入形如add $t0, $t1, $t2的指令，返回32位机器码（用uint存储）
+输入形如add $t0, $t1, $t2的指令，返回32位机器码（用32位string存储）
 */
 
 //反汇编
-string Disassemble(unsigned int instruction);
+string Disassemble(string instruction);
 /*
 输入uint类型的32位机器码，返回形如add $t0, $t1, $t2的指令
 */
 
+
+
 int main()
 {
     //一点测试代码
-    unsigned int instr_add = Assemble("add $t0, $t1, $t2");
-    unsigned int instr_jr = Assemble("jr $ra");
-    unsigned int instr_slt = Assemble("slt $t0, $t1, $t2");
-    unsigned int instr_j = Assemble("j 0x00400000");
-    unsigned int instr_jal = Assemble("jal 0x00400000");
-    unsigned int instr_beq = Assemble("beq $t0, $t1, 0x00001000");
-    unsigned int instr_bne = Assemble("bne $t0, $t1, 0x00001000");
-    unsigned int instr_addi = Assemble("addi $t0, $t1, 100");
-    unsigned int instr_lw = Assemble("lw $t0, 0($t1)");
-    unsigned int instr_sw = Assemble("sw $t0, 0($t1)");
+    string instr_add = Assemble("add $t0, $t1, $t2");
+    string instr_jr = Assemble("jr $ra");
+    string instr_slt = Assemble("slt $t0, $t1, $t2");
+    string instr_j = Assemble("j 0x00400000");
+    string instr_jal = Assemble("jal 0x00400000");
+    string instr_beq = Assemble("beq $t0, $t1, 0x00001000");
+    string instr_bne = Assemble("bne $t0, $t1, 0x00001000");
+    string instr_addi = Assemble("addi $t0, $t1, 100");
+    string instr_lw = Assemble("lw $t0, 0($t1)");
+    string instr_sw = Assemble("sw $t0, 0($t1)");
     cout << Disassemble(instr_add) << endl;
     cout << Disassemble(instr_jr) << endl;
     cout << Disassemble(instr_slt) << endl;

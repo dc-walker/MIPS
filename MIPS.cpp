@@ -1,24 +1,26 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <assert.h>
+#include "Anti_assembler.cpp"
 
 using namespace std;
 
 //根据指令和操作码的建立对应关系
-const unordered_map<string, unsigned int> OPCODES = 
-{
-    // 暂时选了这10条，还没确定,opcode我没仔细看
-    {"add", 0x20},
-    {"sub", }
-    {"addi", 0x8},
-    {"lw", 0x23},
-    {"sw", 0x2b},
-    {"beq", 0x4},
-    {"bne", 0x5},
-    {"jal", 0x3},
-    {"jr", 0x},
-    {"slt", 0x}
-};
+// const unordered_map<string, unsigned int> OPCODES = 
+// {
+//     // 暂时选了这10条，还没确定,opcode我没仔细看
+//     {"add", 0x20},
+//     {"sub", 0x111},
+//     {"addi", 0x8},
+//     {"lw", 0x23},
+//     {"sw", 0x2b},
+//     {"beq", 0x4},
+//     {"bne", 0x5},
+//     {"jal", 0x3},
+//     {"jr", 0x111},
+//     {"slt", 0x}
+// };
 
 //32个寄存器
 
@@ -53,37 +55,77 @@ string Assemble(string instruction);
 输入形如add $t0, $t1, $t2的指令，返回32位机器码（用32位string存储）
 */
 
-//反汇编
-string Disassemble(string instruction);
-/*
-输入uint类型的32位机器码，返回形如add $t0, $t1, $t2的指令
-*/
 
+/*
+Anti_assembler class:
+    Need to Initialize before you use it.
+*/
+Anti_assembler anti_assembler;
+
+/*
+Test for Disassembler:
+    Author: Squarehuang
+    Last Modified: 2023.5.18
+    Description: test for Disassembler
+*/
+void test_for_Disassembler()
+{
+    using namespace std;
+    vector<string> output;
+    vector<string> input = {
+        "00000001001010100100000000100000",
+        "00000001001010100100000000100010",
+        "00100001001010000000000000000001",
+        "10001101001010000000000000000100",
+        "10101101001010001111111111111100",
+        "00010001000010010000000111110100",
+        "00010101000010010000000111110100",
+        "00001100000000000000111110100000",
+        "00000011111000000000000000000100",
+        "00000001001010100100000000101010"
+    };
+    vector<string> instruction = {
+        "add $t0, $t1, $t2",
+        "sub $t0, $t1, $t2",
+        "addi $t0, $t1, 1",
+        "lw $t0, 4($t1)",
+        "sw $t0, -4($t1)",
+        "beq $t0, $t1, 500",
+        "bne $t0, $t1, 500",
+        "jal 4000",
+        "jr $ra",
+        "slt $t0, $t1, $t2"
+    };
+    Anti_assembler anti_assembler_test(input);
+
+    try{
+        output = anti_assembler_test.disassemble();
+    }
+    catch(Myexception &e){
+        e.Display();
+    }
+    assert(output.size() == instruction.size());
+    for(int i=0; i<input.size(); i++){
+        assert(output[i] == instruction[i]);
+    }
+    printf("\nTest Successfully!\n");
+}
 
 
 int main()
 {
-    //一点测试代码
-    string instr_add = Assemble("add $t0, $t1, $t2");
-    string instr_jr = Assemble("jr $ra");
-    string instr_slt = Assemble("slt $t0, $t1, $t2");
-    string instr_j = Assemble("j 0x00400000");
-    string instr_jal = Assemble("jal 0x00400000");
-    string instr_beq = Assemble("beq $t0, $t1, 0x00001000");
-    string instr_bne = Assemble("bne $t0, $t1, 0x00001000");
-    string instr_addi = Assemble("addi $t0, $t1, 100");
-    string instr_lw = Assemble("lw $t0, 0($t1)");
-    string instr_sw = Assemble("sw $t0, 0($t1)");
-    cout << Disassemble(instr_add) << endl;
-    cout << Disassemble(instr_jr) << endl;
-    cout << Disassemble(instr_slt) << endl;
-    cout << Disassemble(instr_j) << endl;
-    cout << Disassemble(instr_jal) << endl;
-    cout << Disassemble(instr_beq) << endl;
-    cout << Disassemble(instr_bne) << endl;
-    cout << Disassemble(instr_addi) << endl;
-    cout << Disassemble(instr_lw) << endl;
-    cout << Disassemble(instr_sw) << endl;
 
+    //一点测试代码
+    // string instr_add = Assemble("add $t0, $t1, $t2");
+    // string instr_sub = Assemble("sub $t0, $t1, $t2");
+    // string instr_addi = Assemble("addi $t0, $t1, 100");
+    // string instr_lw = Assemble("lw $t0, 0($t1)");
+    // string instr_sw = Assemble("sw $t0, 0($t1)");
+    // string instr_beq = Assemble("beq $t0, $t1, 500");
+    // string instr_bne = Assemble("bne $t0, $t1, 500");
+    // string instr_jal = Assemble("jal 4000");
+    // string instr_jr = Assemble("jr $ra");
+    // string instr_slt = Assemble("slt $s0, $s1, $s2");
+    test_for_Disassembler();
     return 0;
 }

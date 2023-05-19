@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <assert.h>
 #include "Anti_assembler.cpp"
+#include "Assembler.cpp"
 
 using namespace std;
 
@@ -50,7 +51,7 @@ private:
 };
 
 //汇编
-string Assemble(string instruction);
+string Assemble(string instr);
 /*
 输入形如add $t0, $t1, $t2的指令，返回32位机器码（用32位string存储）
 */
@@ -116,16 +117,26 @@ int main()
 {
 
     //一点测试代码
-    // string instr_add = Assemble("add $t0, $t1, $t2");
-    // string instr_sub = Assemble("sub $t0, $t1, $t2");
-    // string instr_addi = Assemble("addi $t0, $t1, 100");
-    // string instr_lw = Assemble("lw $t0, 0($t1)");
-    // string instr_sw = Assemble("sw $t0, 0($t1)");
-    // string instr_beq = Assemble("beq $t0, $t1, 500");
-    // string instr_bne = Assemble("bne $t0, $t1, 500");
-    // string instr_jal = Assemble("jal 4000");
-    // string instr_jr = Assemble("jr $ra");
-    // string instr_slt = Assemble("slt $s0, $s1, $s2");
+     string instr_add = Assemble("add $t0, $t1, $t2");
+     cout<<instr_add<<endl;
+    string instr_sub = Assemble("sub $t0, $t1, $t2");
+    cout<<instr_sub<<endl;
+    string instr_addi = Assemble("addi $t0, $t1, 1");
+    cout<<instr_addi<<endl; 
+    string instr_lw = Assemble("lw $t0, 4($t1)");
+    cout<<instr_lw<<endl;
+    string instr_sw = Assemble("sw $t0, -4($t1)");
+    cout<<instr_sw<<endl;
+    string instr_beq = Assemble("beq $t0, $t1, 500");
+    cout<<instr_beq<<endl;
+    string instr_bne = Assemble("bne $t0, $t1, 500");
+    cout<<instr_bne<<endl;
+    string instr_jal = Assemble("jal 4000");
+    cout<<instr_jal<<endl;
+    string instr_jr = Assemble("jr $ra");
+    cout<<instr_jr<<endl;
+    string instr_slt = Assemble("slt $t0, $t1, $t2");
+    cout<<instr_slt<<endl;
     test_for_Disassembler();
     return 0;
 }

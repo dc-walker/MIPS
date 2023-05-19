@@ -157,6 +157,11 @@ public:
     void ShowPC(){
         cout << "PC : " << PC << endl;
     }
+    void showaddress(int i){
+        if(i <= 0 || i >= MAX_ADDRESS_SIZE)
+            cout << "INVALID ADDRESS!";
+        cout << "address at " << i << ": " << address[i];
+    }
 
 private:
     int PC;

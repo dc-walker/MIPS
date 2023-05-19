@@ -180,8 +180,8 @@ std::string process1(std::string line){
         outcome += ", ";
         outcome += REGISTERS2.at(binary_to_int(line.substr(11, 5)));
     }
-    // jr:000000 00000 00000 00000 00000 000100
-    else if(line.substr(len-6,6) == "000100"){
+    // jr:000000 00000 00000 00000 00000 001000
+    else if(line.substr(len-6,6) == "001000"){
         outcome += "jr ";
         outcome += REGISTERS2.at(binary_to_int(line.substr(6, 5)));
     }

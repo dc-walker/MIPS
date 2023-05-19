@@ -8,7 +8,7 @@
 using namespace std;
 
 //The name of registers and their corresponding numbers
-const std::unordered_map<int, std::string> REGISTERS2 =
+const std::unordered_map<int, std::string> REGISTERS =
 {
     {0, "$zero"},{1, "$at"},{2, "$v0"},{3, "$v1"},
     {4, "$a0"},{5, "$a1"},{6, "$a2"},{7, "$a3"},

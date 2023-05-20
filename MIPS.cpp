@@ -5,35 +5,7 @@
 #include "Anti_assembler.cpp"
 #include "Simulator.cpp"
 #include "Assembler.cpp"
-
-using namespace std;
-
-//根据指令和操作码的建立对应关系
-// const unordered_map<string, unsigned int> OPCODES = 
-// {
-//     // 暂时选了这10条，还没确定,opcode我没仔细看
-//     {"add", 0x20},
-//     {"sub", 0x111},
-//     {"addi", 0x8},
-//     {"lw", 0x23},
-//     {"sw", 0x2b},
-//     {"beq", 0x4},
-//     {"bne", 0x5},
-//     {"jal", 0x3},
-//     {"jr", 0x111},
-//     {"slt", 0x}
-// };
-
-//32个寄存器
-
-
-
-//汇编
-string Assemble(string instr);
-/*
-输入形如add $t0, $t1, $t2的指令，返回32位机器码（用32位string存储）
-*/
-
+#include "IntFloatConverter.cpp"
 
 /*
 Anti_assembler class:
@@ -41,12 +13,21 @@ Anti_assembler class:
 */
 //Anti_assembler anti_assembler;
 
-/*
-Test for Disassembler:
-    Author: Squarehuang
-    Last Modified: 2023.5.18
-    Description: test for Disassembler
-*/
+void test_for_Assembler();
+void test_for_Disassembler();
+void test_for_Simulator();
+void test_for_Converter();
+
+int main()
+{
+    //一点测试代码
+    test_for_Assembler();
+    test_for_Disassembler();
+    test_for_Simulator();
+    test_for_Converter();
+    return 0;
+}
+
 void test_for_Disassembler()
 {
     using namespace std;
@@ -90,6 +71,7 @@ void test_for_Disassembler()
     printf("\nTest Successfully!\n");
 }
 
+
 void test_for_Simulator(){
 
     vector<string> input = {
@@ -123,14 +105,58 @@ void test_for_Simulator(){
     mips.Showallreg();
 }
 
-
-int main()
+void test_for_Converter()
 {
+    // std::string a = "00000000000000000000000000001011"; // 11
+    // std::string b = "00000000000000000000000000001101"; // 13
+    int num1 = 11, num2 = 13;
+    std::string a = intToBin(num1);
+    std::string b = intToBin(num2);
+    std::string sumi = addInt(a, b);
+    std::string differencei = subInt(a, b);
+    std::string producti = multiplyInt(a, b);
+    std::string quotienti = divideInt(a, b);
 
-    //一点测试代码
+    std::cout << "Input 1: " << num1 << std::endl;
+    std::cout << "Binary representation: " << a << std::endl;
+    std::cout << "Input 2: " << num2 << std::endl;
+    std::cout << "Binary representation: " << b << std::endl;
 
-     string instr_add = Assemble("add $t0, $t1, $t2");
-     cout<<instr_add<<endl;
+    std::cout << "Integer Addition: " << sumi << " " << binToInt(sumi) << std::endl;
+    std::cout << "Integer Subtraction: " << differencei << " " << binToInt(differencei) << std::endl;
+    std::cout << "Integer Multiplication: " << producti << " " << binToInt(producti) << std::endl;
+    std::cout << "Integer Division: " << quotienti << " " << binToInt(quotienti) << std::endl;
+
+    float num3 = -2;
+    float num4 = 3.75;
+
+    FloatConverter converter1 = floatToBin(num3);
+    FloatConverter converter2 = floatToBin(num4);
+
+    std::cout << "Input 3: " << num3 << std::endl;
+    printFloatBin(converter1);
+    std::cout << "Input 4: " << num4 << std::endl;
+    printFloatBin(converter2);
+
+    FloatConverter sum = addFloats(converter1, converter2);
+    FloatConverter difference = subtractFloats(converter1, converter2);
+    FloatConverter product = multiplyFloats(converter1, converter2);
+    FloatConverter quotient = divideFloats(converter1, converter2);
+
+    std::cout << "Sum: " << binToFloat(sum) << std::endl;
+    printFloatBin(sum);
+    std::cout << "Difference: " << binToFloat(difference) << std::endl;
+    printFloatBin(difference);
+    std::cout << "Product: " << binToFloat(product) << std::endl;
+    printFloatBin(product);
+    std::cout << "Quotient: " << binToFloat(quotient) << std::endl;
+    printFloatBin(quotient);
+}
+
+void test_for_Assembler()
+{
+    string instr_add = Assemble("add $t0, $t1, $t2");
+    cout<<instr_add<<endl;
     string instr_sub = Assemble("sub $t0, $t1, $t2");
     cout<<instr_sub<<endl;
     string instr_addi = Assemble("addi $t0, $t1, 1");
@@ -149,7 +175,4 @@ int main()
     cout<<instr_jr<<endl;
     string instr_slt = Assemble("slt $t0, $t1, $t2");
     cout<<instr_slt<<endl;
-    test_for_Disassembler();
-    test_for_Simulator();
-    return 0;
 }

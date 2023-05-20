@@ -10,7 +10,7 @@ string Assemble(string instr) {
     ss >> op;
     if (op == "add" || op == "slt"|| op == "sub") {
         //ss >> rd >> rs >> rt;
-         regex reg("(\\$[a-zA-Z0-9]+),\\s*(\\$[a-zA-Z0-9]+),\\s*(\\$[a-zA-Z0-9]+)");
+        regex reg("(\\$[a-zA-Z0-9]+),\\s*(\\$[a-zA-Z0-9]+),\\s*(\\$[a-zA-Z0-9]+)");
         smatch match;
         if (regex_search(instr, match, reg)) {
              rd = match[1];

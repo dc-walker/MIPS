@@ -9,11 +9,18 @@ string Assemble(string instr) {
     uint32_t imm;
     ss >> op;
     if (op == "add" || op == "slt"|| op == "sub") {
-        ss >> rd >> rs >> rt;
+        //ss >> rd >> rs >> rt;
+         regex reg("(\\$[a-zA-Z0-9]+),\\s*(\\$[a-zA-Z0-9]+),\\s*(\\$[a-zA-Z0-9]+)");
+        smatch match;
+        if (regex_search(instr, match, reg)) {
+             rd = match[1];
+             rs = match[2];
+             rt = match[3];
+        }
         uint32_t opcode = 0x0;
         uint32_t funct = opcodes[op];
-        rd.pop_back();
-        rs.pop_back();
+        // rd.pop_back();
+        // rs.pop_back();
         uint32_t rd_code = REGISTERS3.at(rd) << 11;
         uint32_t rs_code = REGISTERS3.at(rs) << 21;
         uint32_t rt_code = REGISTERS3.at(rt) << 16;
@@ -37,9 +44,16 @@ string Assemble(string instr) {
     }
 
     else if (op == "beq" || op == "bne"|| op =="addi") {
-        ss >> rs >> rt >> num;
-        rs.pop_back();
-        rt.pop_back();
+        // ss >> rt >> rs >> num;
+        // rs.pop_back();
+        // rt.pop_back();
+        regex reg("(\\$[a-zA-Z0-9]+),\\s*(\\$[a-zA-Z0-9]+),\\s*(-?(?:0x)?[0-9a-fA-F]+)");
+        smatch match;
+        if (regex_search(instr, match, reg)) {
+            rt = match[1];
+            rs = match[2];
+            num = match[3];
+        }
         if(num[0]=='0'&&num[1]=='x')  imm = stoi(num, nullptr,16);
         else imm = stoi(num);
         uint32_t opcode = opcodes[op] << 26;

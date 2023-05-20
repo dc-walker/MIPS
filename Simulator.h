@@ -51,7 +51,6 @@ public:
     void ShowPC();
     void showaddress(int i);
 
-private:
     int PC;
     vector<string> address;
     vector<int> reg;

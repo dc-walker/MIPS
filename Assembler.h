@@ -19,7 +19,7 @@ map<string, unsigned int> opcodes = {
         {"sub", 0x22}
 };
 
-const unordered_map<string, unsigned int> REGISTERS =
+const unordered_map<string, unsigned int> REGISTERS3 =
         {
                 {"$zero", 0},{"$at", 1},{"$v0", 2},{"$v1", 3},
                 {"$a0", 4},{"$a1", 5},{"$a2", 6},{"$a3", 7},

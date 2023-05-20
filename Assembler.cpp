@@ -14,9 +14,9 @@ string Assemble(string instr) {
         uint32_t funct = opcodes[op];
         rd.pop_back();
         rs.pop_back();
-        uint32_t rd_code = REGISTERS.at(rd) << 11;
-        uint32_t rs_code = REGISTERS.at(rs) << 21;
-        uint32_t rt_code = REGISTERS.at(rt) << 16;
+        uint32_t rd_code = REGISTERS3.at(rd) << 11;
+        uint32_t rs_code = REGISTERS3.at(rs) << 21;
+        uint32_t rt_code = REGISTERS3.at(rt) << 16;
         uint32_t machine_code = opcode | rs_code | rt_code | rd_code | funct;
         return bitset<32>(machine_code).to_string();
     }
@@ -24,7 +24,7 @@ string Assemble(string instr) {
         ss >> rs;
         uint32_t opcode = 0x0 ;
         uint32_t funct = 8;
-        uint32_t rs_code = REGISTERS.at(rs) << 21;
+        uint32_t rs_code = REGISTERS3.at(rs) << 21;
         uint32_t machine_code = opcode | rs_code|funct;
         return bitset<32>(machine_code).to_string();
     } else if (op == "j" || op == "jal") {
@@ -43,8 +43,8 @@ string Assemble(string instr) {
         if(num[0]=='0'&&num[1]=='x')  imm = stoi(num, nullptr,16);
         else imm = stoi(num);
         uint32_t opcode = opcodes[op] << 26;
-        uint32_t rs_code = REGISTERS.at(rs) << 21;
-        uint32_t rt_code = REGISTERS.at(rt) << 16;
+        uint32_t rs_code = REGISTERS3.at(rs) << 21;
+        uint32_t rt_code = REGISTERS3.at(rt) << 16;
         uint32_t imm_code = imm & 0xFFFF;
         uint32_t machine_code = opcode | rs_code | rt_code | imm_code;
         return bitset<32>(machine_code).to_string();
@@ -54,9 +54,10 @@ string Assemble(string instr) {
         getline(ss,rs,')');
         rt.pop_back();
         rs.erase(0,1);
+        REGISTERS3.at("$ra");
         uint32_t opcode = opcodes[op] << 26;
-        uint32_t rs_code = REGISTERS.at(rs) << 21;
-        uint32_t rt_code = REGISTERS.at(rt) << 16;
+        uint32_t rs_code = REGISTERS3.at(rs) << 21;
+        uint32_t rt_code = REGISTERS3.at(rt) << 16;
         uint32_t imm_code = imm & 0xFFFF;
         uint32_t machine_code = opcode | rs_code | rt_code | imm_code;
         return bitset<32>(machine_code).to_string();

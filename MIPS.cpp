@@ -113,7 +113,10 @@ void test_for_Converter()
 {
     // std::string a = "00000000000000000000000000001011"; // 11
     // std::string b = "00000000000000000000000000001101"; // 13
-    int num1 = 11, num2 = 13;
+
+    int num1, num2;
+    std::cout << "Input two test integers" << std::endl;
+    std::cin >> num1 >> num2;
     std::string a = intToBin(num1);
     std::string b = intToBin(num2);
     std::string sumi = addInt(a, b);
@@ -131,9 +134,9 @@ void test_for_Converter()
     std::cout << "Integer Multiplication: " << producti << " " << binToInt(producti) << std::endl;
     std::cout << "Integer Division: " << quotienti << " " << binToInt(quotienti) << std::endl;
 
-    float num3 = -2;
-    float num4 = 3.75;
-
+    float num3, num4;
+    std::cout << "Input two test floats" << std::endl;
+    std::cin >> num3 >> num4;
     FloatConverter converter1 = floatToBin(num3);
     FloatConverter converter2 = floatToBin(num4);
 

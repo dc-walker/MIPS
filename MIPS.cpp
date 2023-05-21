@@ -126,9 +126,10 @@ void operate_sim()
                 input.push_back(line);
             }
             simulator.load(input);
+            simulator.Execute();
             for (int i = 0; i < input.size(); i++)
             {
-                simulator.ExecuteOne();
+
                 outfile << input[i] << endl;
                 outfile << "--------------------------------" << endl;
                 for (int i = 0; i < 32; i++)

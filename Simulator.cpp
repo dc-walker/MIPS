@@ -75,6 +75,11 @@ void MipsSimulator::ExecuteOne() {
         imm = stoi(parameter[2]);
         op2 = RegToNum.at(parameter[3]);
         if (parameter[0] == "lw") {
+            if(reg[op2]+imm < 0)
+            {
+                cout << "INVALID ADDRESS FOR lw!";
+                return;
+            }
             if (address[reg[op2] + imm].empty()) {
                 reg[op1] = 0;
                 return;
@@ -83,6 +88,11 @@ void MipsSimulator::ExecuteOne() {
             reg[op1] = bits.to_ulong();
         }
         if (parameter[0] == "sw") {
+            if(reg[op2]+imm < 0)
+            {
+                cout << "INVALID ADDRESS FOR sw!";
+                return;
+            }
             address[reg[op2] + imm] = Transform(reg[op1]);
         }
     }
